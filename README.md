@@ -23,9 +23,11 @@
 
 <div align="center">
 
-https://github.com/user-attachments/assets/demo
+<video src="https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4" controls="controls" width="100%" style="border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12);"></video>
 
-<video src="data/Finance_Wizard_demo.mp4" controls="controls" width="100%" style="border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12);"></video>
+<p align="center">
+  <em>Direct Video: <a href="https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4">Watch / Download Demo Video (12 MB)</a></em>
+</p>
 
 </div>
 
