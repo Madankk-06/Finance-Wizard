@@ -352,7 +352,7 @@ ffmpeg -i screen_recording.mov -vcodec h264 -acodec aac -crf 28 docs/demo.mp4
 <div align="center">
 
 ### MADAN KK
-**Developer & Creator · AI Finance Controller**
+**Product Developer | Finance Wizard**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/madankk04122004/)
 [![GitHub](https://img.shields.io/badge/GitHub-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Madankk-06)
