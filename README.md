@@ -23,10 +23,15 @@
 
 <div align="center">
 
-<video src="https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4" controls="controls" width="100%" style="border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12);"></video>
+[![▶️ Watch Finance Wizard Demo Video](data/video_thumbnail.png)](https://github.com/Madankk-06/Finance-Wizard/blob/main/data/Finance_Wizard_demo.mp4)
+
+<br/>
+
+[![Watch Demo](https://img.shields.io/badge/▶️_Watch_Demo_Video-Click_to_Play-00C853?style=for-the-badge&logo=googleplay&logoColor=white)](https://github.com/Madankk-06/Finance-Wizard/blob/main/data/Finance_Wizard_demo.mp4)
+[![Download MP4](https://img.shields.io/badge/📥_Download_Video-MP4-3B82F6?style=for-the-badge)](https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4)
 
 <p align="center">
-  <em>Direct Video: <a href="https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4">Watch / Download Demo Video (12 MB)</a></em>
+  <sub>👆 Click the thumbnail image or the button above to play the full demo video directly on GitHub</sub>
 </p>
 
 </div>
