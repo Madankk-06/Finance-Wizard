@@ -13,7 +13,7 @@
 
 > **Transform 2–5 days of manual reconciliation into a sub-30 minute automated audit cycle.**
 
-[📽️ Demo Video](#-demo-video) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#-architecture) · [🧩 10-Phase Pipeline](#-10-phase-pipeline)
+[📽️ Demo Video](#-demo-video) · [📸 Screenshots](#-screenshots) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#-architecture) · [🧩 10-Phase Pipeline](#-10-phase-pipeline)
 
 </div>
 
@@ -23,18 +23,55 @@
 
 <div align="center">
 
-[![▶️ Watch Finance Wizard Demo Video](data/video_thumbnail.png)](https://github.com/Madankk-06/Finance-Wizard/blob/main/data/Finance_Wizard_demo.mp4)
+[![Download & Watch Full Demonstration Video](https://img.shields.io/badge/📥_Download_%26_Watch_Demo_Video-Click_Here-00C853?style=for-the-badge&logo=googleplay&logoColor=white)](https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4)
 
 <br/>
 
-[![Watch Demo](https://img.shields.io/badge/▶️_Watch_Demo_Video-Click_to_Play-00C853?style=for-the-badge&logo=googleplay&logoColor=white)](https://github.com/Madankk-06/Finance-Wizard/blob/main/data/Finance_Wizard_demo.mp4)
-[![Download MP4](https://img.shields.io/badge/📥_Download_Video-MP4-3B82F6?style=for-the-badge)](https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4)
-
 <p align="center">
-  <sub>👆 Click the thumbnail image or the button above to play the full demo video directly on GitHub</sub>
+  <sub>👆 Click the button above to download and watch the full high-resolution video walkthrough (<code>Finance_Wizard_demo.mp4</code>)</sub>
 </p>
 
 </div>
+
+---
+
+## 📸 Screenshots
+
+### 1. Upload & Start
+Upload the three required CSV feeds (Settlement, Bank Statement, Ledger) or load the 74-record demo batch.
+![Upload Page](docs/screenshots/upload.png)
+
+### 2. Dashboard — Overview & KPIs
+Real-time match rate, auto-approved settlements, held records, and escalation triage.
+![Dashboard Overview](docs/screenshots/dashboard.png)
+
+### 3. Transaction Audit Trail
+Granular record-level table with MDR, GST on MDR, TDS (Sec. 194-O), effective bank credit, and auto-generated explainers.
+![Transactions](docs/screenshots/transactions.png)
+
+### 4. AI Finance Controller Reports & Forecasting
+4-Pass matching tier distribution, statutory fee waterfalls, merchant analysis, and 25-day liquidity trajectory.
+![Reports](docs/screenshots/reports.png)
+
+### 5. Cash Position & Simulator
+Realised cash, pending at risk, optimistic/pessimistic counterfactual liquidity simulator.
+![Cash Position](docs/screenshots/cash.png)
+
+### 6. Finance Agent (NL Query Copilot)
+Natural language queries to chat with your financial data, backed by Groq LLM.
+![Finance Agent](docs/screenshots/finance_agent.png)
+
+### 7. Financial Memory & Historical Audit Search
+Date-range filtering, audit trail inspection, and one-click RFC 4180 CSV export.
+![Financial Memory](docs/screenshots/memory.png)
+
+### 8. Institutional Rules & Guide
+4-Pass matching cascade reference, statutory fee formula guidelines, and institutional memory rules.
+![Guide](docs/screenshots/guide.png)
+
+### 9. Settings & Governance
+Configurable statutory fee rates (MDR, GST, TDS), matching tolerances, and developer connect.
+![Settings](docs/screenshots/settings.png)
 
 ---
 
@@ -247,8 +284,10 @@ finance-wizard/
 │   │   └── api.js              # Backend API client
 │   └── App.jsx
 │
+├── docs/
+│   └── screenshots/            # UI Screenshots
 ├── data/
-│   ├── Finance_Wizard_demo.mp4 # Video Demonstration
+│   ├── Finance_Wizard_demo.mp4 # Video Demonstration (Original)
 │   └── samples/                # Demo CSVs (settlement, bank, ledger)
 ├── package.json
 └── vite.config.js
@@ -306,7 +345,7 @@ finance-wizard/
 <div align="center">
 
 ### MADAN KK
-**Product Developer | Finance Wizard**
+**Developer & Creator · AI Finance Controller**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/madankk04122004/)
 [![GitHub](https://img.shields.io/badge/GitHub-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Madankk-06)
