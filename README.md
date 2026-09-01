@@ -205,8 +205,8 @@ SAMPLES_DIR=../data/samples
 finance-wizard/
 ├── backend/
 │   ├── engine/
-│   │   ├── matcher.py          # 4-pass matching algorithm
-│   │   ├── classifier.py       # 11-priority classification engine
+│   │   ├── matcher.py          # Pass matching algorithm
+│   │   ├── classifier.py       # Priority classification engine
 │   │   ├── investigator.py     # AI auto-investigation agent
 │   │   ├── explainer.py        # Plain-language explanation generator
 │   │   ├── cash_simulator.py   # Cash waterfall & forecasting
@@ -214,12 +214,12 @@ finance-wizard/
 │   │   ├── nl_agent.py         # Natural language Finance Agent
 │   │   └── groq_client.py      # Groq LLM API client
 │   ├── routers/
-│   │   ├── ingest.py           # Phase 1: CSV upload & normalisation
-│   │   ├── reconcile.py        # Phase 2: Matching & reconciliation
-│   │   ├── classify.py         # Phase 3: Classification & transactions API
-│   │   ├── cash.py             # Phase 7: Cash position & forecasting
-│   │   ├── memory.py           # Phase 6: Memory rules API
-│   │   └── ask.py              # Phase 8: NL query endpoint
+│   │   ├── ingest.py           # CSV upload & normalisation
+│   │   ├── reconcile.py        # Matching & reconciliation
+│   │   ├── classify.py         # Classification & transactions API
+│   │   ├── cash.py             # Cash position & forecasting
+│   │   ├── memory.py           # Memory rules API
+│   │   └── ask.py              # NL query endpoint
 │   ├── config.py               # Settings & environment
 │   ├── database.py             # SQLite + AES-256-GCM encryption layer
 │   ├── main.py                 # FastAPI app entry point
