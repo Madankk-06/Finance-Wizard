@@ -13,7 +13,19 @@
 
 > **Transform 2–5 days of manual reconciliation into a sub-30 minute automated audit cycle.**
 
-[📽️ Demo Video](#-demo) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#-architecture) · [📸 Screenshots](#-screenshots)
+[📽️ Demo Video](#-demo-video) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#-architecture) · [🧩 10-Phase Pipeline](#-10-phase-pipeline)
+
+</div>
+
+---
+
+## 📽️ Demo Video
+
+<div align="center">
+
+https://github.com/user-attachments/assets/demo
+
+<video src="data/Finance_Wizard_demo.mp4" controls="controls" width="100%" style="border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12);"></video>
 
 </div>
 
@@ -121,8 +133,8 @@ flowchart TD
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Madankk-06/finance-wizard.git
-cd finance-wizard
+git clone https://github.com/Madankk-06/Finance-Wizard.git
+cd Finance-Wizard
 ```
 
 ### 2. Backend Setup
@@ -229,76 +241,11 @@ finance-wizard/
 │   └── App.jsx
 │
 ├── data/
+│   ├── Finance_Wizard_demo.mp4 # Video Demonstration
 │   └── samples/                # Demo CSVs (settlement, bank, ledger)
 ├── package.json
 └── vite.config.js
 ```
-
----
-
-## 📸 Screenshots
-
-> Save your screenshots to `docs/screenshots/` with the filenames below.
-
-### Upload & Start
-![Upload Page](docs/screenshots/upload.png)
-
-### Dashboard — KPI Overview
-![Dashboard](docs/screenshots/dashboard.png)
-
-### Transaction Audit Trail
-![Transactions](docs/screenshots/transactions.png)
-
-### Reports — Charts & Cash Forecasting
-![Reports](docs/screenshots/reports.png)
-
-### Cash Position Waterfall
-![Cash Position](docs/screenshots/cash.png)
-
-### Finance Agent — NL Chat
-![Finance Agent](docs/screenshots/finance_agent.png)
-
-### Financial Memory & Historical Audit Search
-![Memory](docs/screenshots/memory.png)
-
-### Guide — Rules Reference
-![Guide](docs/screenshots/guide.png)
-
-### Settings
-![Settings](docs/screenshots/settings.png)
-
----
-
-## 📽️ Demo
-
-> ### Can you embed a video in a GitHub README?
->
-> **✅ Yes!** GitHub supports the `<video>` HTML tag in README files (since 2022).  
-> The video file must be **inside your repository** (not YouTube/Drive). Max size: **100 MB**.
-
-### Step 1 — Record your demo
-Use QuickTime (Mac) → Export as `.mp4`
-
-### Step 2 — Compress & place the file
-```bash
-# Optional: compress with ffmpeg
-ffmpeg -i screen_recording.mov -vcodec h264 -acodec aac -crf 28 docs/demo.mp4
-```
-
-### Step 3 — Embed in README (plays inline on GitHub!)
-```html
-<video src="docs/demo.mp4" controls width="100%"></video>
-```
-
-### Your Demo Video
-
-<video src="docs/demo.mp4" controls width="100%"></video>
-
-> If video doesn't load, use a **GIF** instead:
-> ```bash
-> ffmpeg -i docs/demo.mp4 -vf "fps=8,scale=1280:-1" -loop 0 docs/demo.gif
-> ```
-> Then replace the video tag with: `![Demo](docs/demo.gif)`
 
 ---
 
