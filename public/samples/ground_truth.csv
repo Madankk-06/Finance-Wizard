@@ -1,0 +1,75 @@
+order_id,settlement_id,utr,true_category,expected_difference,note
+ORD1050,stl_MXFIPEKA,UTR5515471723,PARTIAL_PAYMENT,1144.07,only part of the expected settlement has landed so far
+ORD1020,stl_NBQISXBC,UTR3230455397,FEE_DEDUCTION,25.2,ledger did not account for MDR + GST on MDR
+ORD1055,stl_QZPEUQXI,UTR6923691118,UNEXPLAINED,386.97,"unexplained gap of ₹386.97, matches no known formula"
+ORD1069,stl_VKSLLDZN,UTR6603653282,LUMPED_BATCH_MATCHED,0.0,"1 of 6 orders lumped into batch #2 (settlement_id stl_VKSLLDZN), paid via a single shared bank credit"
+ORD1057,stl_OPMDPGTU,UTR5462576123,EDGE_DELAYED_REFUND,0.0,original settlement is clean; a linked refund debit follows later
+ORD1008,stl_RACPDCLS,UTR5892152758,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1051,stl_MJHASRXP,UTR9522981706,UNEXPLAINED,148.69,"unexplained gap of ₹148.69, matches no known formula"
+ORD1012,stl_QMOBZZWM,UTR3639532275,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1075,stl_WVTQQENJ,UTR5153416167,LUMPED_BATCH_MATCHED,0.0,"1 of 4 orders lumped into batch #3 (settlement_id stl_WVTQQENJ), paid via a single shared bank credit"
+ORD1035,stl_TXAETNQM,UTR1475423555,ROUNDING,1.09,gateway rounding variance of ~₹1.09
+ORD1036,stl_ZTDUOZUH,UTR3155056963,ROUNDING,2.94,gateway rounding variance of ~₹2.94
+ORD1010,stl_ANQYYLAM,UTR1111465697,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1070,stl_VKSLLDZN,UTR6603653282,LUMPED_BATCH_MATCHED,0.0,"1 of 6 orders lumped into batch #2 (settlement_id stl_VKSLLDZN), paid via a single shared bank credit"
+ORD1001,stl_GEONYLGC,UTR4218096792,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1024,stl_GLDIRDEW,UTR1567685639,TAX_DEDUCTION,80.07,ledger did not account for TDS under Section 194-O
+ORD1061,stl_MTDKCLUJ,UTR9097687401,LUMPED_BATCH_MATCHED,0.0,"1 of 5 orders lumped into batch #1 (settlement_id stl_MTDKCLUJ), paid via a single shared bank credit"
+ORD1072,stl_VKSLLDZN,UTR6603653282,LUMPED_BATCH_MATCHED,0.0,"1 of 6 orders lumped into batch #2 (settlement_id stl_VKSLLDZN), paid via a single shared bank credit"
+ORD1046,stl_YIVTVWZJ,UTR1433615449,PARTIAL_PAYMENT,1295.52,only part of the expected settlement has landed so far
+ORD1059,stl_LYAFDLEJ,UTR5570848882,EDGE_POST_RECON_CHARGEBACK,0.0,original settlement clean; a chargeback debit follows with a broken reference
+ORD1031,stl_DWHJHXCI,UTR6794965824,ROUNDING,0.97,gateway rounding variance of ~₹0.97
+ORD1058,stl_ORIOQFDE,MULTIPLE,EDGE_SPLIT_SETTLEMENT,0.0,"one settlement paid via two separate bank credits, must be summed"
+ORD1077,stl_WVTQQENJ,UTR5153416167,LUMPED_BATCH_MATCHED,0.0,"1 of 4 orders lumped into batch #3 (settlement_id stl_WVTQQENJ), paid via a single shared bank credit"
+ORD1045,stl_XERIGQZR,UTR7170673491,TIMING_DELAY,0.0,"amount correct, settled T+8 (hard delay vs expected T+2/T+3)"
+ORD1067,stl_VKSLLDZN,UTR6603653282,LUMPED_BATCH_MATCHED,0.0,"1 of 6 orders lumped into batch #2 (settlement_id stl_VKSLLDZN), paid via a single shared bank credit"
+ORD1007,stl_GQPVTZQA,UTR9748212378,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1037,stl_LFWDSZBO,UTR8082940619,ROUNDING,0.86,gateway rounding variance of ~₹0.86
+ORD1053,stl_UQYJZFMG,UTR7569964776,UNEXPLAINED,291.93,"unexplained gap of ₹291.93, matches no known formula"
+ORD1042,stl_IZZYHYHX,UTR4030757369,TIMING_DELAY,0.0,"amount correct, settled T+11 (hard delay vs expected T+2/T+3)"
+ORD1004,stl_HIPTGADD,UTR7283783266,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1006,stl_NDILEKIY,UTR2243933283,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1027,stl_QZKLIEYG,UTR7316901913,TAX_DEDUCTION,32.17,ledger did not account for TDS under Section 194-O
+ORD1018,stl_JOKHGJQT,UTR6934288497,FEE_DEDUCTION,124.76,ledger did not account for MDR + GST on MDR
+ORD1005,stl_NLZMPKGC,UTR2374095461,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1076,stl_WVTQQENJ,UTR5153416167,LUMPED_BATCH_MATCHED,0.0,"1 of 4 orders lumped into batch #3 (settlement_id stl_WVTQQENJ), paid via a single shared bank credit"
+ORD1023,stl_XHTGOWVG,UTR3171008989,TAX_DEDUCTION,47.78,ledger did not account for TDS under Section 194-O
+ORD1054,stl_BUDSUNBU,UTR6954913173,UNEXPLAINED,373.26,"unexplained gap of ₹373.26, matches no known formula"
+ORD1047,stl_GIROTLLM,UTR6079113021,PARTIAL_PAYMENT,2144.51,only part of the expected settlement has landed so far
+ORD1009,stl_BMOEEEUT,UTR5211785025,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1071,stl_VKSLLDZN,UTR6603653282,LUMPED_BATCH_MATCHED,0.0,"1 of 6 orders lumped into batch #2 (settlement_id stl_VKSLLDZN), paid via a single shared bank credit"
+ORD1052,stl_LOZWBKMA,UTR7028619625,UNEXPLAINED,98.44,"unexplained gap of ₹98.44, matches no known formula"
+ORD1038,stl_UFBOPJGV,UTR6337857655,TIMING_DELAY,0.0,"amount correct, settled T+5 (soft delay vs expected T+2/T+3)"
+ORD1074,stl_WVTQQENJ,UTR5153416167,LUMPED_BATCH_MATCHED,0.0,"1 of 4 orders lumped into batch #3 (settlement_id stl_WVTQQENJ), paid via a single shared bank credit"
+ORD1025,stl_VXZMMKGG,UTR0516993895,TAX_DEDUCTION,17.84,ledger did not account for TDS under Section 194-O
+ORD1014,stl_MBXRPXJY,UTR0171851337,FEE_DEDUCTION,144.69,ledger did not account for MDR + GST on MDR
+ORD1068,stl_VKSLLDZN,UTR6603653282,LUMPED_BATCH_MATCHED,0.0,"1 of 6 orders lumped into batch #2 (settlement_id stl_VKSLLDZN), paid via a single shared bank credit"
+ORD1028,stl_GQQRVJIG,UTR6891718906,TAX_DEDUCTION,15.39,ledger did not account for TDS under Section 194-O
+ORD1041,stl_MTEMGOCL,UTR4624887476,TIMING_DELAY,0.0,"amount correct, settled T+8 (hard delay vs expected T+2/T+3)"
+ORD1062,stl_MTDKCLUJ,UTR9097687401,LUMPED_BATCH_MATCHED,0.0,"1 of 5 orders lumped into batch #1 (settlement_id stl_MTDKCLUJ), paid via a single shared bank credit"
+ORD1017,stl_FBNZEBZC,UTR2852728877,FEE_DEDUCTION,114.68,ledger did not account for MDR + GST on MDR
+ORD1056,stl_TBULECCH,UTR6259304075,EDGE_DELAYED_REFUND,0.0,original settlement is clean; a linked refund debit follows later
+ORD1026,stl_IVISXXBW,UTR2632154710,TAX_DEDUCTION,96.77,ledger did not account for TDS under Section 194-O
+ORD1021,stl_SHBBYOAH,UTR9283838389,FEE_DEDUCTION,54.63,ledger did not account for MDR + GST on MDR
+ORD1016,stl_DUPNGUZP,UTR1336148540,FEE_DEDUCTION,153.79,ledger did not account for MDR + GST on MDR
+ORD1032,stl_WRRNRUKS,UTR9343338300,ROUNDING,3.96,gateway rounding variance of ~₹3.96
+ORD1029,stl_FASHZMTX,UTR8474844003,TAX_DEDUCTION,71.39,ledger did not account for TDS under Section 194-O
+ORD1043,stl_OVNRHIDJ,UTR9203221549,TIMING_DELAY,0.0,"amount correct, settled T+10 (hard delay vs expected T+2/T+3)"
+ORD1022,stl_UMNXMGIP,UTR2146166823,FEE_DEDUCTION,87.12,ledger did not account for MDR + GST on MDR
+ORD1049,stl_VYSGNTKQ,UTR8483598829,PARTIAL_PAYMENT,1243.44,only part of the expected settlement has landed so far
+ORD1011,stl_FEBOSHFX,UTR9740542938,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1034,stl_VQYZJXJP,UTR9548265917,ROUNDING,2.91,gateway rounding variance of ~₹2.91
+ORD1013,stl_AYOHFRUT,UTR9751049049,FEE_DEDUCTION,140.24,ledger did not account for MDR + GST on MDR
+ORD1040,stl_NYBHSRDE,UTR4142207097,TIMING_DELAY,0.0,"amount correct, settled T+8 (hard delay vs expected T+2/T+3)"
+ORD1044,stl_GTBYMAMR,UTR1730868724,TIMING_DELAY,0.0,"amount correct, settled T+7 (hard delay vs expected T+2/T+3)"
+ORD1019,stl_CHZIZKHF,UTR1218766437,FEE_DEDUCTION,33.43,ledger did not account for MDR + GST on MDR
+ORD1039,stl_TNCAWQWA,UTR6178085016,TIMING_DELAY,0.0,"amount correct, settled T+5 (soft delay vs expected T+2/T+3)"
+ORD1048,stl_XJSYEVAN,UTR0695398045,PARTIAL_PAYMENT,1503.09,only part of the expected settlement has landed so far
+ORD1002,stl_XDUCLMHO,UTR4701746814,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1033,stl_REWFRKJP,UTR5775355721,ROUNDING,0.58,gateway rounding variance of ~₹0.58
+ORD1064,stl_MTDKCLUJ,UTR9097687401,LUMPED_BATCH_MATCHED,0.0,"1 of 5 orders lumped into batch #1 (settlement_id stl_MTDKCLUJ), paid via a single shared bank credit"
+ORD1065,stl_MTDKCLUJ,UTR9097687401,LUMPED_BATCH_MATCHED,0.0,"1 of 5 orders lumped into batch #1 (settlement_id stl_MTDKCLUJ), paid via a single shared bank credit"
+ORD1015,stl_ORXWISHG,UTR9263166277,FEE_DEDUCTION,93.4,ledger did not account for MDR + GST on MDR
+ORD1030,stl_VZDLUUEZ,UTR3674308172,TAX_DEDUCTION,55.8,ledger did not account for TDS under Section 194-O
+ORD1003,stl_ZGSYEBRA,UTR3307666193,MATCHED,0.0,ledger correctly anticipated full fee/tax deduction
+ORD1063,stl_MTDKCLUJ,UTR9097687401,LUMPED_BATCH_MATCHED,0.0,"1 of 5 orders lumped into batch #1 (settlement_id stl_MTDKCLUJ), paid via a single shared bank credit"

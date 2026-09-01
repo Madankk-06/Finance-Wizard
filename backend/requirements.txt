@@ -1,0 +1,23 @@
+# ── Web framework ────────────────────────────────────────────────────────────
+fastapi==0.111.1
+uvicorn[standard]==0.30.1
+
+# ── Settings / env ───────────────────────────────────────────────────────────
+python-dotenv==1.0.1
+pydantic-settings==2.3.4
+
+# ── Data processing ──────────────────────────────────────────────────────────
+pandas==2.2.2
+python-multipart==0.0.9          # multipart file uploads
+
+# ── Encryption (AES-256-GCM) ─────────────────────────────────────────────────
+cryptography==42.0.8
+
+# ── SQLCipher (optional — full-file AES-256 for SQLite) ──────────────────────
+# Requires: brew install sqlcipher   then: pip install sqlcipher3
+# If not installed the app falls back to sqlite3 + field-level AES-256-GCM.
+# Uncomment the line below if sqlcipher is present on your system:
+# sqlcipher3==0.5.3
+
+# ── Date / numeric helpers ───────────────────────────────────────────────────
+python-dateutil==2.9.0.post0
