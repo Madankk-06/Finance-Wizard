@@ -194,10 +194,8 @@ export default function AuthorConnectCard() {
           {/* Portfolio Website */}
           <li className="soc-portfolio">
             <a href="https://madan-portfolio-orcin.vercel.app/" target="_blank" rel="noopener noreferrer" title="Personal Portfolio">
-              <svg className="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              <svg className="social-icon" viewBox="0 0 24 24">
+                <path d="M6 3h8.5c3.59 0 6.5 2.91 6.5 6.5s-2.91 6.5-6.5 6.5H10v5H6V3zm4 9h4.5c1.38 0 2.5-1.12 2.5-2.5S15.88 7 14.5 7H10v5z" />
               </svg>
             </a>
           </li>
