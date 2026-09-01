@@ -105,30 +105,62 @@ export default function AuthorConnectCard() {
         .author-social-list li.soc-linkedin a:before { background: #0077b5; }
         .author-social-list li.soc-gmail    a:before { background: #dd4b39; }
         .author-social-list li.soc-github   a:before { background: #24292e; }
-        .author-social-list li.soc-instagram a:before {
-          background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        .author-avatar-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 76px;
+          height: 76px;
+          border-radius: 50%;
+          border: 3px solid var(--primary);
+          box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
+          margin-bottom: 12px;
+          overflow: hidden;
+          background: #ffffff;
+          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+          cursor: pointer;
+          text-decoration: none;
         }
 
-        .author-social-list li a .social-icon {
-          position: relative;
-          z-index: 3;
-          width: 28px;
-          height: 28px;
-          fill: #374151;
-          transition: fill 0.4s ease-out, transform 0.5s ease-out;
+        .author-avatar-link:hover {
+          transform: translateY(-3px) scale(1.04);
+          box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+          border-color: var(--secondary, #8B5CF6);
         }
 
-        .author-social-list li a:hover .social-icon {
-          fill: #fff;
-          transform: rotateY(360deg);
+        .author-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
-        .author-divider {
-          width: 48px;
-          height: 3px;
+        .author-portfolio-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 18px;
+          padding: 8px 18px;
           border-radius: 99px;
-          background: linear-gradient(90deg, var(--primary), var(--secondary, #8B5CF6));
-          margin: 0 auto 20px auto;
+          background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(16, 185, 129, 0.12));
+          border: 1px solid var(--border-subtle);
+          color: var(--primary);
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .author-portfolio-badge:hover {
+          background: linear-gradient(135deg, var(--primary), var(--secondary, #8B5CF6));
+          color: #ffffff;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+        }
+
+        .author-social-list li.soc-portfolio a:before {
+          background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
         }
       `}</style>
 
@@ -148,10 +180,28 @@ export default function AuthorConnectCard() {
 
       {/* Content */}
       <div className="author-card-content">
+        {/* Clickable Logo Avatar */}
+        <a 
+          href="https://madan-portfolio-orcin.vercel.app/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="author-avatar-link"
+          title="Visit Madan's Portfolio"
+        >
+          <img src="/logo.png" alt="Madan Logo" className="author-avatar-img" />
+        </a>
+
         <div className="author-name">MADAN KK</div>
-        <div className="author-title">Product Developer | Finance Wizard</div>
+        <div className="author-title">Developer &amp; Creator · AI Finance Controller</div>
 
         <ul className="author-social-list">
+          {/* Portfolio / Logo link */}
+          <li className="soc-portfolio">
+            <a href="https://madan-portfolio-orcin.vercel.app/" target="_blank" rel="noopener noreferrer" title="Personal Portfolio">
+              <img src="/logo.png" alt="Portfolio" style={{ width: '32px', height: '32px', objectFit: 'contain', position: 'relative', zIndex: 3 }} />
+            </a>
+          </li>
+
           {/* LinkedIn */}
           <li className="soc-linkedin">
             <a href="https://www.linkedin.com/in/madankk04122004/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
@@ -188,6 +238,17 @@ export default function AuthorConnectCard() {
             </a>
           </li>
         </ul>
+
+        {/* Portfolio Button Link */}
+        <a 
+          href="https://madan-portfolio-orcin.vercel.app/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="author-portfolio-badge"
+          title="Visit Portfolio Website"
+        >
+          <span>🌐 View Full Portfolio &amp; Projects ↗</span>
+        </a>
       </div>
     </div>
   );
