@@ -28,7 +28,7 @@
 <br/>
 
 <p align="center">
-  <sub>👆 Click the button above to download and watch the full high-resolution video walkthrough (<code>Finance_Wizard_demo.mp4</code>)</sub>
+  <sub>👆 Click the button above to download and watch the full high-resolution video walkthrough</sub>
 </p>
 
 </div>
