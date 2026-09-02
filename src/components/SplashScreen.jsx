@@ -107,13 +107,13 @@ export default function SplashScreen({ onComplete }) {
         {/* Badge */}
         <div className="splash-glow-badge">
           <Zap size={15} color="#0284C7" />
-          <span>Razorpay AI Buildathon 2026</span>
+          <span>Track 04 - AI Finance Controller</span>
         </div>
 
         {/* Track Heading: Razorpay - Buildathon Track 04 */}
         <div className="splash-track">
           <TextType
-            text="Razorpay - Buildathon Track 04"
+            text="Razorpay - Buildathon 2026"
             typingSpeed={40}
             initialDelay={200}
             loop={false}
@@ -156,7 +156,7 @@ export default function SplashScreen({ onComplete }) {
             transition: 'opacity 0.6s ease, transform 0.6s ease',
           }}
         >
-          Autonomous 4-Pass Settlement Reconciliation &amp; AI Cash Controller
+          Autonomous 4-Pass Settlement Reconciliation &amp; AI Finance Controller
         </p>
 
       </div>
@@ -176,7 +176,7 @@ export default function SplashScreen({ onComplete }) {
         }}
       >
         <ShieldCheck size={15} color="#0284C7" />
-        <span>Enterprise AES-256 Multi-Source Audit Engine</span>
+        <span>Enterprise AES-256-GCM Multi-Source Audit Engine</span>
       </div>
     </div>
   );

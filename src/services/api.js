@@ -4,7 +4,7 @@
  * Provides unified, typed functions for calling the FastAPI reconciliation engine.
  */
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 /**
  * Health check
