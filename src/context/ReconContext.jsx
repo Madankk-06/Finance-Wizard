@@ -385,7 +385,7 @@ export const ReconProvider = ({ children }) => {
     const mapped = mapBackendRecord(order);
     setSelectedOrder(mapped);
 
-    if (batchId && mapped?.orderId) {
+    if (batchId && mapped?.orderId && batchId !== "demo-batch-74") {
       try {
         const detail = await api.getTransactionDetail(batchId, mapped.orderId);
         const report = await api.investigateOrder(batchId, mapped.orderId);
@@ -397,6 +397,19 @@ export const ReconProvider = ({ children }) => {
       } catch (e) {
         console.warn("Could not load full drawer details:", e);
       }
+    } else if (mapped) {
+      // Standalone investigation report
+      const mockReport = {
+        diagnosis: mapped.reasoning?.[0] || `Discrepancy detected for order ${mapped.orderId}: Net variance of ₹${Number(mapped.difference || 0).toFixed(2)} between settlement and bank statement.`,
+        root_cause: mapped.category === 'UNEXPLAINED' ? 'Missing UTR reference on bank credit feed' : (mapped.category === 'PARTIAL_PAYMENT' ? 'Tranche payout split across multiple cycles' : 'Settlement fee/tax variance'),
+        recommended_action: mapped.status === 'ESCALATE' ? 'Flag for manual merchant inquiry with bank statement UTR proof.' : 'Auto-clear under institutional memory rule.',
+        confidence: mapped.confidence || 95,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setSelectedOrder(prev => ({
+        ...prev,
+        investigationReport: mockReport
+      }));
     }
   };
 
@@ -405,7 +418,7 @@ export const ReconProvider = ({ children }) => {
   };
 
   const markOrderResolved = async (orderId, note = "Resolved by analyst") => {
-    if (batchId) {
+    if (batchId && batchId !== "demo-batch-74") {
       try {
         await api.resolveOrderApi(batchId, orderId, note);
       } catch (e) {
@@ -421,6 +434,7 @@ export const ReconProvider = ({ children }) => {
       }
     }));
     setTransactions(prev => prev.map(t => t.orderId === orderId ? { ...t, resolved: true, resolvedNote: note } : t));
+    setSelectedOrder(prev => prev && prev.orderId === orderId ? { ...prev, resolved: true, resolvedNote: note } : prev);
   };
 
   const addOrderNote = (orderId, note) => {
