@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ReconProvider } from './context/ReconContext';
 import Sidebar from './components/Sidebar';
 import OrderDrawer from './components/OrderDrawer';
+import SplashScreen from './components/SplashScreen';
 
 // Pages
 import UploadPage from './pages/UploadPage';
@@ -19,8 +20,11 @@ import SettingsPage from './pages/SettingsPage';
 import GuidePage from './pages/GuidePage';
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <ReconProvider>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       <BrowserRouter>
         <div className="app-container">
           {/* Always Visible Left Sidebar */}
