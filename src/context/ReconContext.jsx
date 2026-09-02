@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import * as api from '../services/api';
-import { MOCK_ORDERS, KPI_DATA, CASH_POSITION_DATA } from '../data/mockData';
+import { MOCK_ORDERS, ALL_74_RECORDS, KPI_DATA, CASH_POSITION_DATA } from '../data/mockData';
 
 const ReconContext = createContext();
 
@@ -266,14 +266,28 @@ export const ReconProvider = ({ children }) => {
       const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
       
       setBatchId("demo-batch-74");
-      setTransactions(MOCK_ORDERS);
+      setTransactions(ALL_74_RECORDS);
+      
+      const appCount = ALL_74_RECORDS.filter(m => m.status === 'APPROVE').length;
+      const holdCount = ALL_74_RECORDS.filter(m => m.status === 'HOLD').length;
+      const escCount = ALL_74_RECORDS.filter(m => m.status === 'ESCALATE').length;
+
       setKpiData({
-        ...KPI_DATA,
+        matchRate: 91.9,
+        matchRateLabel: "Matched transactions",
+        approveCount: appCount,
+        approveLabel: "Auto-cleared",
+        holdCount: holdCount,
+        holdLabel: "Needs glance",
+        escalateCount: escCount,
+        escalateLabel: "Needs human",
+        throughput: `${ALL_74_RECORDS.length} in 0.24s`,
+        throughputLabel: "Records processed",
         batchDate: formattedDate,
         batchTime: formattedTime,
-        totalRecords: MOCK_ORDERS.length,
-        throughput: `${MOCK_ORDERS.length} in 0.24s`,
-        processingTime: "0.24s"
+        totalRecords: ALL_74_RECORDS.length,
+        processingTime: "0.24s",
+        healthStatus: "Healthy"
       });
       setCashData(CASH_POSITION_DATA);
       setEscalations([
