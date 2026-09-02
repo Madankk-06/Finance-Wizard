@@ -534,26 +534,26 @@ export const MOCK_ORDERS = [
 function generateAll74Records() {
   const records = [...MOCK_ORDERS];
   const merchants = ["MERCH_URBANKART", "MERCH_STYLEHIVE", "MERCH_FRESHCART", "MERCH_GADGETBAY"];
-  const baseOrderNum = 1011;
 
-  // Fill in remaining APPROVED matched rows
-  for (let i = 0; i < 44; i++) {
-    const oid = `ORD${baseOrderNum + i}`;
-    if (records.some(r => r.orderId === oid)) continue;
-    const gross = 1200 + (i * 137.5) % 6500;
+  // Fill in remaining APPROVED matched rows until exactly 58 APPROVE
+  let appIdx = 0;
+  while (records.filter(r => r.status === "APPROVE").length < 58) {
+    appIdx++;
+    const oid = `ORD${2000 + appIdx}`;
+    const gross = 1200 + (appIdx * 137.5) % 6500;
     const mdr = Math.round(gross * 0.02 * 100) / 100;
     const gst = Math.round(mdr * 0.18 * 100) / 100;
     const tds = Math.round(gross * 0.01 * 100) / 100;
     const net = Math.round((gross - mdr - gst - tds) * 100) / 100;
-    const merch = merchants[i % merchants.length];
+    const merch = merchants[appIdx % merchants.length];
     
     records.push({
       orderId: oid,
       status: "APPROVE",
-      category: i % 4 === 0 ? "FEE_DED" : (i % 5 === 0 ? "TAX_DED" : "MATCHED"),
-      difference: i % 4 === 0 ? Math.round((mdr + gst) * 100) / 100 : (i % 5 === 0 ? tds : 0.00),
-      confidence: 96 + (i % 4),
-      matchedTo: `Bank UTR 5542${20 + i}`,
+      category: appIdx % 4 === 0 ? "FEE_DED" : (appIdx % 5 === 0 ? "TAX_DED" : "MATCHED"),
+      difference: appIdx % 4 === 0 ? Math.round((mdr + gst) * 100) / 100 : (appIdx % 5 === 0 ? tds : 0.00),
+      confidence: 96 + (appIdx % 4),
+      matchedTo: `Bank UTR 5542${20 + appIdx}`,
       settleDate: "27 Aug 2026",
       orderDate: "25 Aug 2026",
       merchant: merch,
@@ -563,11 +563,11 @@ function generateAll74Records() {
       tdsAmount: tds,
       expectedNet: net,
       actualBank: net,
-      settlementId: `stl_GEN${1000 + i}`,
-      paymentId: `pay_GEN${9000 + i}`,
-      bankUtr: `UTR5542${20 + i}8891`,
-      settlementRow: `#${16 + i}`,
-      ledgerEntry: `INV #${55000 + i}`,
+      settlementId: `stl_GEN${1000 + appIdx}`,
+      paymentId: `pay_GEN${9000 + appIdx}`,
+      bankUtr: `UTR5542${20 + appIdx}8891`,
+      settlementRow: `#${16 + appIdx}`,
+      ledgerEntry: `INV #${55000 + appIdx}`,
       alertSummary: "One-line: Auto-reconciled with standard formula and bank credit proof.",
       reasoning: ["Formulaic match verified against ledger expected amount."],
       fullExplanation: `Order ${oid} successfully reconciled against merchant statement. Verified by Finance Wizard auto-clearing engine.`,
@@ -576,39 +576,40 @@ function generateAll74Records() {
     });
   }
 
-  // Fill in remaining HOLD items (total 9)
-  const holdCount = records.filter(r => r.status === "HOLD").length;
-  for (let i = holdCount; i < 9; i++) {
-    const oid = `ORD${1080 + i}`;
-    const gross = 3400 + i * 280;
+  // Fill in remaining HOLD items until exactly 9 HOLD
+  let hldIdx = 0;
+  while (records.filter(r => r.status === "HOLD").length < 9) {
+    hldIdx++;
+    const oid = `ORD${3000 + hldIdx}`;
+    const gross = 3400 + hldIdx * 280;
     const mdr = Math.round(gross * 0.02 * 100) / 100;
     const gst = Math.round(mdr * 0.18 * 100) / 100;
     const tds = Math.round(gross * 0.01 * 100) / 100;
     const net = Math.round((gross - mdr - gst - tds) * 100) / 100;
-    const diff = i % 2 === 0 ? 1.85 : 0.00;
+    const diff = hldIdx % 2 === 0 ? 1.85 : 0.00;
 
     records.push({
       orderId: oid,
       status: "HOLD",
-      category: i % 2 === 0 ? "ROUNDING" : "TIMING_DELAY",
+      category: hldIdx % 2 === 0 ? "ROUNDING" : "TIMING_DELAY",
       difference: diff,
-      confidence: 84 + (i % 5),
+      confidence: 84 + (hldIdx % 5),
       matchedTo: "Pending Review",
-      settleDate: i % 2 === 0 ? "28 Aug 2026" : "Pending",
+      settleDate: hldIdx % 2 === 0 ? "28 Aug 2026" : "Pending",
       orderDate: "22 Aug 2026",
-      merchant: merchants[i % merchants.length],
+      merchant: merchants[hldIdx % merchants.length],
       grossAmount: gross,
       mdrFee: mdr,
       gstOnMdr: gst,
       tdsAmount: tds,
       expectedNet: net,
       actualBank: Math.round((net - diff) * 100) / 100,
-      settlementId: `stl_HLD${300 + i}`,
-      paymentId: `pay_HLD${400 + i}`,
-      bankUtr: `UTR771122${10 + i}`,
-      settlementRow: `#${60 + i}`,
-      ledgerEntry: `INV #${66000 + i}`,
-      alertSummary: `One-line: ${i % 2 === 0 ? 'Minor variance requires confirmation' : 'T+5 cycle rollover in progress'}`,
+      settlementId: `stl_HLD${300 + hldIdx}`,
+      paymentId: `pay_HLD${400 + hldIdx}`,
+      bankUtr: `UTR771122${10 + hldIdx}`,
+      settlementRow: `#${60 + hldIdx}`,
+      ledgerEntry: `INV #${66000 + hldIdx}`,
+      alertSummary: `One-line: ${hldIdx % 2 === 0 ? 'Minor variance requires confirmation' : 'T+5 cycle rollover in progress'}`,
       reasoning: ["Variance within secondary tolerance band. Awaiting periodic review."],
       fullExplanation: `Order ${oid} placed on hold pending merchant finance confirmation or standard gateway settlement window.`,
       firstSeen: "28 Aug 2026 10:20 AM",
@@ -616,8 +617,48 @@ function generateAll74Records() {
     });
   }
 
-  // Ensure exact 74 items total (58 APPROVE, 9 HOLD, 7 ESCALATE)
-  return records.slice(0, 74);
+  // Fill in remaining ESCALATE items until exactly 7 ESCALATE
+  let escIdx = 0;
+  while (records.filter(r => r.status === "ESCALATE").length < 7) {
+    escIdx++;
+    const oid = `ORD${4000 + escIdx}`;
+    const gross = 5400 + escIdx * 350;
+    const mdr = Math.round(gross * 0.02 * 100) / 100;
+    const gst = Math.round(mdr * 0.18 * 100) / 100;
+    const tds = Math.round(gross * 0.01 * 100) / 100;
+    const net = Math.round((gross - mdr - gst - tds) * 100) / 100;
+    const diff = 1240.00;
+
+    records.push({
+      orderId: oid,
+      status: "ESCALATE",
+      category: "UNEXPLAINED",
+      difference: diff,
+      confidence: 30,
+      matchedTo: "Unmatched",
+      settleDate: "—",
+      orderDate: "20 Aug 2026",
+      merchant: merchants[escIdx % merchants.length],
+      grossAmount: gross,
+      mdrFee: mdr,
+      gstOnMdr: gst,
+      tdsAmount: tds,
+      expectedNet: net,
+      actualBank: Math.round((net - diff) * 100) / 100,
+      settlementId: `stl_ESC${500 + escIdx}`,
+      paymentId: `pay_ESC${600 + escIdx}`,
+      bankUtr: "—",
+      settlementRow: `#${70 + escIdx}`,
+      ledgerEntry: `INV #${77000 + escIdx}`,
+      alertSummary: "One-line: Unexplained ledger variance missing corresponding bank credit.",
+      reasoning: ["Variance exceeds all automated thresholds. Escalated for human audit."],
+      fullExplanation: `Order ${oid} requires manual inquiry with bank provider regarding UTR credit confirmation.`,
+      firstSeen: "28 Aug 2026 10:32 AM",
+      history: [{ time: "28 Aug 2026 10:32 AM", text: "Escalated to human investigator", type: "escalate" }]
+    });
+  }
+
+  return records;
 }
 
 export const ALL_74_RECORDS = generateAll74Records();
