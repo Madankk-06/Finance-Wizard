@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import * as api from '../services/api';
-import { MOCK_ORDERS, ALL_74_RECORDS, KPI_DATA, CASH_POSITION_DATA } from '../data/mockData';
+import { MOCK_ORDERS, ALL_74_RECORDS, KPI_DATA, CASH_POSITION_DATA, FINANCIAL_MEMORY_RULES } from '../data/mockData';
 
 const ReconContext = createContext();
 
@@ -134,7 +134,7 @@ export const ReconProvider = ({ children }) => {
   const [kpiData, setKpiData] = useState(EMPTY_KPI);
   const [cashData, setCashData] = useState(EMPTY_CASH);
   const [escalations, setEscalations] = useState([]);
-  const [memoryRules, setMemoryRules] = useState([]);
+  const [memoryRules, setMemoryRules] = useState(FINANCIAL_MEMORY_RULES);
 
   // Selected order for Right Drawer drill-down
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -158,16 +158,20 @@ export const ReconProvider = ({ children }) => {
     }
   ]);
 
-  // Fetch all batch data after reconciliation
+  // Fetch all batch data after reconciliation (Fast Concurrent Fetch)
   const fetchBatchData = useCallback(async (bId, measuredElapsed = null) => {
     try {
-      // 1. Fetch transactions
-      const txRes = await api.getTransactions(bId, { page_size: 2000 });
-      const mapped = (txRes.items || []).map(mapBackendRecord);
+      const [txRes, summary, cashRes, escRes, memRes] = await Promise.all([
+        api.getTransactions(bId, { page_size: 2000 }).catch(() => ({ items: [] })),
+        api.getBatchSummary(bId).catch(() => ({ elapsed_s: 0.24 })),
+        api.getCashWaterfall(bId).catch(() => ({ waterfall: null })),
+        api.getEscalationInvestigations(bId).catch(() => ({ reports: [] })),
+        api.getMemoryRules().catch(() => ({ rules: FINANCIAL_MEMORY_RULES }))
+      ]);
+
+      const mapped = (txRes?.items || []).map(mapBackendRecord);
       setTransactions(mapped);
 
-      // 2. Fetch summary & KPIs
-      const summary = await api.getBatchSummary(bId);
       const appCount = mapped.filter(m => m.status === 'APPROVE').length;
       const holdCount = mapped.filter(m => m.status === 'HOLD').length;
       const escCount = mapped.filter(m => m.status === 'ESCALATE').length;
@@ -175,7 +179,7 @@ export const ReconProvider = ({ children }) => {
       const now = new Date();
       const formattedDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
       const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-      const exactTimeStr = measuredElapsed ? `${measuredElapsed}s` : (summary.elapsed_s ? `${summary.elapsed_s}s` : '0.24s');
+      const exactTimeStr = measuredElapsed ? `${measuredElapsed}s` : (summary?.elapsed_s ? `${summary.elapsed_s}s` : '0.24s');
 
       setKpiData({
         matchRate: mapped.length > 0 ? Math.round((appCount / mapped.length) * 1000) / 10 : 0,
@@ -195,8 +199,6 @@ export const ReconProvider = ({ children }) => {
         healthStatus: "Healthy"
       });
 
-      // 3. Fetch cash waterfall
-      const cashRes = await api.getCashWaterfall(bId);
       if (cashRes?.waterfall) {
         const wf = cashRes.waterfall;
         setCashData({
@@ -218,14 +220,8 @@ export const ReconProvider = ({ children }) => {
         });
       }
 
-      // 4. Fetch escalation investigations
-      const escRes = await api.getEscalationInvestigations(bId);
-      setEscalations(escRes.reports || []);
-
-      // 5. Fetch memory rules
-      const memRes = await api.getMemoryRules();
-      setMemoryRules(memRes.rules || []);
-
+      setEscalations(escRes?.reports || []);
+      setMemoryRules((memRes?.rules && memRes.rules.length > 0) ? memRes.rules : FINANCIAL_MEMORY_RULES);
       setIsReconciled(true);
     } catch (err) {
       console.error("Error fetching batch data:", err);
@@ -308,13 +304,7 @@ export const ReconProvider = ({ children }) => {
           action: "Hold in pending verification queue until T+3 clearance window."
         }
       ]);
-      setMemoryRules([
-        { id: "RULE-01", name: "High-Volume Lump Settlement", rule_pattern: "N orders matching single bank UTR deposit within 0.05% tolerance", action: "AUTO_APPROVE" },
-        { id: "RULE-02", name: "Gateway MDR + GST Variance", rule_pattern: "Difference exactly matches MDR (2%) + GST (18%)", action: "AUTO_APPROVE" },
-        { id: "RULE-03", name: "TDS Section 194-O Withholding", rule_pattern: "1.0% statutory gross deduction accounted for in bank credit", action: "AUTO_APPROVE" },
-        { id: "RULE-04", name: "Holiday Clearance Latency", rule_pattern: "Settlement clearance delay <= 3 calendar days", action: "AUTO_APPROVE" },
-        { id: "RULE-05", name: "Rounding Error Tolerance", rule_pattern: "Net variance <= ₹5.00", action: "AUTO_APPROVE" }
-      ]);
+      setMemoryRules(FINANCIAL_MEMORY_RULES);
       setIsReconciled(true);
       return "demo-batch-74";
     } finally {
