@@ -1,5 +1,8 @@
-# 🧾 Finance Wizard — AI Finance Controller
 
+<div align="center">
+  
+# Finance Wizard — AI Finance Controller
+</div>
 <div align="center">
 
 **Razorpay AI Buildathon · Track 04 — AI Finance Controller**
