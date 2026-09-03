@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import * as api from '../services/api';
-import { MOCK_ORDERS, KPI_DATA, CASH_POSITION_DATA, FINANCIAL_MEMORY_RULES } from '../data/mockData';
 
 const ReconContext = createContext();
 
@@ -258,16 +257,8 @@ export const ReconProvider = ({ children }) => {
       setIsReconciled(true);
       return bId;
     } catch (err) {
-      console.warn("Backend API not reachable (running in standalone/Vercel mode). Activating client engine:", err);
-      // Fallback for Vercel deployment without active backend
-      const mapped = MOCK_ORDERS.map(mapBackendRecord);
-      setBatchId('batch-standalone-74');
-      setTransactions(mapped);
-      setKpiData(KPI_DATA);
-      setCashData(CASH_POSITION_DATA);
-      setMemoryRules(FINANCIAL_MEMORY_RULES);
-      setIsReconciled(true);
-      return 'batch-standalone-74';
+      console.error("Reconciliation error:", err);
+      throw err;
     } finally {
       setIsReconciling(false);
     }
@@ -410,37 +401,14 @@ export const ReconProvider = ({ children }) => {
       };
       setChatMessages(prev => [...prev, botMsg]);
     } catch (err) {
-      console.warn("Backend copilot API offline, generating client-side answer:", err);
-      const lower = query.toLowerCase();
-      let answerText = "";
-      let matchedOrder = null;
-      
-      if (lower.includes("gross") || lower.includes("net") || lower.includes("realization")) {
-        answerText = "Our total gross intake across the 74 transactions is ₹2,42,499.31, resulting in an effective net bank realization of ₹2,32,799.31 after ₹9,700.00 in statutory deductions (MDR 2%, GST 18%, and TDS Section 194-O).";
-      } else if (lower.includes("ord1055") || lower.includes("1055")) {
-        const ord = MOCK_ORDERS.find(o => o.orderId === 'ORD1055') || MOCK_ORDERS[0];
-        matchedOrder = ord;
-        answerText = `Order ORD1055 was escalated due to an unverified fee variance of ₹${ord.difference || '1,144.07'}. The bank deposit did not reflect standard 2% MDR calculations and is queued for merchant investigation.`;
-      } else if (lower.includes("partial") || lower.includes("locked") || lower.includes("dispute")) {
-        answerText = "Currently, ₹18,640.00 is flagged across 11 escalated records (partial tranche payouts and chargeback reversals). 55 transactions (85.1%) have been auto-cleared without human intervention.";
-      } else if (lower.includes("delay") || lower.includes("timing") || lower.includes("5 days")) {
-        answerText = "8 transactions experienced T+2 to T+5 clearance latency within the configured 3-day tolerance window. These are classified as TIMING_DELAY and placed on temporary HOLD until next bank ledger settlement.";
-      } else if (lower.includes("fee") || lower.includes("tax") || lower.includes("breakdown") || lower.includes("mdr")) {
-        answerText = "Fee breakdown: Standard MDR fee is 2.0% (₹4,849.98), GST on MDR is 18.0% (₹873.00), and Section 194-O statutory TDS withholding is 1.0% (₹2,425.00). Total deductions match ₹9,700.00 across the batch.";
-      } else if (lower.includes("lumped") || lower.includes("batch")) {
-        answerText = "15 orders were resolved through Pass 2 (Lumped Batch N:1) by decomposing single aggregate bank deposit UTRs using pro-rata net distribution.";
-      } else {
-        answerText = `Finance Wizard analyzed your query "${query}". All 74 multi-source transactions are processed with an 85.1% match rate. ₹2,32,799.31 settled and ₹18,640.00 in pending review.`;
-      }
-
-      const botMsg = {
+      console.error("Ask query failed:", err);
+      const errMsg = {
         id: Date.now() + 1,
         sender: "wizard",
-        text: answerText,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        relatedOrder: matchedOrder
+        text: "Please run reconciliation first to enable the Financial Copilot.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      setChatMessages(prev => [...prev, botMsg]);
+      setChatMessages(prev => [...prev, errMsg]);
     }
   };
 

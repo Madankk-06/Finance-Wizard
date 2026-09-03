@@ -17,11 +17,10 @@ import {
 } from 'lucide-react';
 import { useRecon } from '../context/ReconContext';
 import * as api from '../services/api';
-import { FINANCIAL_MEMORY_RULES } from '../data/mockData';
 
 export default function GuidePage() {
   const { theme, memoryRules = [], reconConfig } = useRecon();
-  const [liveRules, setLiveRules] = useState(FINANCIAL_MEMORY_RULES);
+  const [liveRules, setLiveRules] = useState([]);
   const isDark = theme === 'dark';
 
   useEffect(() => {
@@ -29,12 +28,8 @@ export default function GuidePage() {
       setLiveRules(memoryRules);
     } else {
       api.getMemoryRules().then(res => {
-        if (res?.rules && res.rules.length > 0) setLiveRules(res.rules);
-        else setLiveRules(FINANCIAL_MEMORY_RULES);
-      }).catch(err => {
-        console.warn("Failed to fetch memory rules, using calibrated rule store:", err);
-        setLiveRules(FINANCIAL_MEMORY_RULES);
-      });
+        if (res?.rules) setLiveRules(res.rules);
+      }).catch(err => console.warn("Failed to fetch memory rules:", err));
     }
   }, [memoryRules]);
 

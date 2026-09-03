@@ -2,9 +2,6 @@
 node_modules/
 dist/
 .DS_Store
-*.mp4
-*.mov
-*.avi
 
 # ── Python / FastAPI backend ──────────────────────────────────────────────────
 __pycache__/
@@ -37,3 +34,8 @@ backend/*.db.enc
 .pytest_cache/
 htmlcov/
 .coverage
+
+# Large video files in root
+Finance_Wizard.mp4
+Intro.mp4
+
