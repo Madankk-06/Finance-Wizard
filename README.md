@@ -23,10 +23,14 @@
 
 <div align="center">
 
-[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVv0ykOP3M)
+[![Watch Finance Wizard Demo on YouTube](docs/youtube_thumbnail.jpg)](https://youtu.be/XnVxCykOP3M)
+
+<br/>
+
+[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVxCykOP3M)
 
 <p align="center">
-  <sub>👆 Click the thumbnail above or <a href="https://youtu.be/XnVxCykOP3M">watch the full walkthrough on YouTube (https://youtu.be/XnVxCykOP3M)</a></sub>
+  <sub>👆 Click the thumbnail above or <a href="https://youtu.be/XnVxCykOP3M">watch the full walkthrough on YouTube: <strong>https://youtu.be/XnVxCykOP3M</strong></a></sub>
 </p>
 
 </div>
