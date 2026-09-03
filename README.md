@@ -30,7 +30,7 @@
 
 <br/>
 
-[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVxCykOP3M)
+[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVv0ykOP3M)
 
 <p align="center">
   <sub>👆 Click the thumbnail above or watch the full walkthrough on YouTube: <a href="https://youtu.be/XnVv0ykOP3M"><strong>https://youtu.be/XnVxCykOP3M</strong></a></sub>
