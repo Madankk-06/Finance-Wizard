@@ -23,57 +23,13 @@
 
 <div align="center">
 
-[![Watch Finance Wizard Demo on YouTube](https://img.youtube.com/vi/XnVxCykOP3M/maxresdefault.jpg)](https://youtu.be/XnVxCykOP3M)
-
-<br/>
-
-[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVxCykOP3M)
+[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVv0ykOP3M)
 
 <p align="center">
   <sub>👆 Click the thumbnail above or <a href="https://youtu.be/XnVxCykOP3M">watch the full walkthrough on YouTube (https://youtu.be/XnVxCykOP3M)</a></sub>
 </p>
 
 </div>
-
----
-
-## 📸 Screenshots
-
-### 1. Upload & Start
-Upload the three required CSV feeds (Settlement, Bank Statement, Ledger) or load the 74-record demo batch.
-![Upload Page](docs/screenshots/upload.png)
-
-### 2. Dashboard — Overview & KPIs
-Real-time match rate, auto-approved settlements, held records, and escalation triage.
-![Dashboard Overview](docs/screenshots/dashboard.png)
-
-### 3. Transaction Audit Trail
-Granular record-level table with MDR, GST on MDR, TDS (Sec. 194-O), effective bank credit, and auto-generated explainers.
-![Transactions](docs/screenshots/transactions.png)
-
-### 4. AI Finance Controller Reports & Forecasting
-4-Pass matching tier distribution, statutory fee waterfalls, merchant analysis, and 25-day liquidity trajectory.
-![Reports](docs/screenshots/reports.png)
-
-### 5. Cash Position & Simulator
-Realised cash, pending at risk, optimistic/pessimistic counterfactual liquidity simulator.
-![Cash Position](docs/screenshots/cash.png)
-
-### 6. Finance Agent (NL Query Copilot)
-Natural language queries to chat with your financial data, backed by Groq LLM.
-![Finance Agent](docs/screenshots/finance_agent.png)
-
-### 7. Financial Memory & Historical Audit Search
-Date-range filtering, audit trail inspection, and one-click RFC 4180 CSV export.
-![Financial Memory](docs/screenshots/memory.png)
-
-### 8. Institutional Rules & Guide
-4-Pass matching cascade reference, statutory fee formula guidelines, and institutional memory rules.
-![Guide](docs/screenshots/guide.png)
-
-### 9. Settings & Governance
-Configurable statutory fee rates (MDR, GST, TDS), matching tolerances, and developer connect.
-![Settings](docs/screenshots/settings.png)
 
 ---
 
@@ -163,6 +119,45 @@ flowchart TD
 | **8** | Finance Agent | Natural language chat interface for querying your reconciliation dataset |
 | **9** | Configurable Rates | MDR, GST, TDS, rounding and date-tolerance rates changeable from Settings |
 | **10** | Historical Audit | Date-range search + RFC 4180 CSV export of any past batch |
+
+---
+## 📸 Screenshots
+
+### 1. Upload & Start
+Upload the three required CSV feeds (Settlement, Bank Statement, Ledger) or load the 74-record demo batch.
+![Upload Page](docs/screenshots/upload.png)
+
+### 2. Dashboard — Overview & KPIs
+Real-time match rate, auto-approved settlements, held records, and escalation triage.
+![Dashboard Overview](docs/screenshots/dashboard.png)
+
+### 3. Transaction Audit Trail
+Granular record-level table with MDR, GST on MDR, TDS (Sec. 194-O), effective bank credit, and auto-generated explainers.
+![Transactions](docs/screenshots/transactions.png)
+
+### 4. AI Finance Controller Reports & Forecasting
+4-Pass matching tier distribution, statutory fee waterfalls, merchant analysis, and 25-day liquidity trajectory.
+![Reports](docs/screenshots/reports.png)
+
+### 5. Cash Position & Simulator
+Realised cash, pending at risk, optimistic/pessimistic counterfactual liquidity simulator.
+![Cash Position](docs/screenshots/cash.png)
+
+### 6. Finance Agent (NL Query Copilot)
+Natural language queries to chat with your financial data, backed by Groq LLM.
+![Finance Agent](docs/screenshots/finance_agent.png)
+
+### 7. Financial Memory & Historical Audit Search
+Date-range filtering, audit trail inspection, and one-click RFC 4180 CSV export.
+![Financial Memory](docs/screenshots/memory.png)
+
+### 8. Institutional Rules & Guide
+4-Pass matching cascade reference, statutory fee formula guidelines, and institutional memory rules.
+![Guide](docs/screenshots/guide.png)
+
+### 9. Settings & Governance
+Configurable statutory fee rates (MDR, GST, TDS), matching tolerances, and developer connect.
+![Settings](docs/screenshots/settings.png)
 
 ---
 
