@@ -18,34 +18,6 @@ import {
 } from 'lucide-react';
 import { useRecon } from '../context/ReconContext';
 
-// Helper to convert human-readable dates ("27 Aug 2026", "25-08-2026", ISO) to "YYYY-MM-DD"
-function parseToISODate(dateStr) {
-  if (!dateStr || dateStr === '—' || dateStr === 'Pending') return null;
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
-
-  const months = {
-    jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
-    jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
-  };
-
-  const parts = String(dateStr).trim().split(/[\s-]+/);
-  if (parts.length >= 3) {
-    const day = parts[0].padStart(2, '0');
-    const monKey = parts[1].toLowerCase().slice(0, 3);
-    const month = months[monKey] || '08';
-    const year = parts[2].length === 2 ? `20${parts[2]}` : parts[2];
-    if (/^\d{4}$/.test(year) && /^\d{2}$/.test(day)) {
-      return `${year}-${month}-${day}`;
-    }
-  }
-
-  const parsed = new Date(dateStr);
-  if (!isNaN(parsed.getTime())) {
-    return parsed.toISOString().split('T')[0];
-  }
-  return null;
-}
-
 export default function MemoryPage() {
   const { theme, transactions = [], isReconciled, openOrderDrawer } = useRecon();
   const isDark = theme === 'dark';
@@ -77,13 +49,9 @@ export default function MemoryPage() {
   const filteredRecords = useMemo(() => {
     return transactions.filter(tx => {
       // Date filter
-      const rawDate = tx.settleDate || tx.orderDate || '';
-      const isoDate = parseToISODate(rawDate);
-      
-      if (isoDate) {
-        if (fromDate && isoDate < fromDate) return false;
-        if (toDate && isoDate > toDate) return false;
-      }
+      const txDate = tx.settleDate || tx.orderDate || '';
+      if (fromDate && txDate && txDate < fromDate) return false;
+      if (toDate && txDate && txDate > toDate) return false;
 
       // Status filter
       if (statusFilter !== 'ALL' && tx.status !== statusFilter) return false;

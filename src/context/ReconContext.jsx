@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import * as api from '../services/api';
-import { MOCK_ORDERS, ALL_74_RECORDS, KPI_DATA, CASH_POSITION_DATA, FINANCIAL_MEMORY_RULES } from '../data/mockData';
+import { MOCK_ORDERS, KPI_DATA, CASH_POSITION_DATA, FINANCIAL_MEMORY_RULES } from '../data/mockData';
 
 const ReconContext = createContext();
 
@@ -134,7 +134,7 @@ export const ReconProvider = ({ children }) => {
   const [kpiData, setKpiData] = useState(EMPTY_KPI);
   const [cashData, setCashData] = useState(EMPTY_CASH);
   const [escalations, setEscalations] = useState([]);
-  const [memoryRules, setMemoryRules] = useState(FINANCIAL_MEMORY_RULES);
+  const [memoryRules, setMemoryRules] = useState([]);
 
   // Selected order for Right Drawer drill-down
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -158,20 +158,16 @@ export const ReconProvider = ({ children }) => {
     }
   ]);
 
-  // Fetch all batch data after reconciliation (Fast Concurrent Fetch)
+  // Fetch all batch data after reconciliation
   const fetchBatchData = useCallback(async (bId, measuredElapsed = null) => {
     try {
-      const [txRes, summary, cashRes, escRes, memRes] = await Promise.all([
-        api.getTransactions(bId, { page_size: 2000 }).catch(() => ({ items: [] })),
-        api.getBatchSummary(bId).catch(() => ({ elapsed_s: 0.24 })),
-        api.getCashWaterfall(bId).catch(() => ({ waterfall: null })),
-        api.getEscalationInvestigations(bId).catch(() => ({ reports: [] })),
-        api.getMemoryRules().catch(() => ({ rules: FINANCIAL_MEMORY_RULES }))
-      ]);
-
-      const mapped = (txRes?.items || []).map(mapBackendRecord);
+      // 1. Fetch transactions
+      const txRes = await api.getTransactions(bId, { page_size: 2000 });
+      const mapped = (txRes.items || []).map(mapBackendRecord);
       setTransactions(mapped);
 
+      // 2. Fetch summary & KPIs
+      const summary = await api.getBatchSummary(bId);
       const appCount = mapped.filter(m => m.status === 'APPROVE').length;
       const holdCount = mapped.filter(m => m.status === 'HOLD').length;
       const escCount = mapped.filter(m => m.status === 'ESCALATE').length;
@@ -179,7 +175,7 @@ export const ReconProvider = ({ children }) => {
       const now = new Date();
       const formattedDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
       const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-      const exactTimeStr = measuredElapsed ? `${measuredElapsed}s` : (summary?.elapsed_s ? `${summary.elapsed_s}s` : '0.24s');
+      const exactTimeStr = measuredElapsed ? `${measuredElapsed}s` : (summary.elapsed_s ? `${summary.elapsed_s}s` : '0.24s');
 
       setKpiData({
         matchRate: mapped.length > 0 ? Math.round((appCount / mapped.length) * 1000) / 10 : 0,
@@ -199,6 +195,8 @@ export const ReconProvider = ({ children }) => {
         healthStatus: "Healthy"
       });
 
+      // 3. Fetch cash waterfall
+      const cashRes = await api.getCashWaterfall(bId);
       if (cashRes?.waterfall) {
         const wf = cashRes.waterfall;
         setCashData({
@@ -220,8 +218,14 @@ export const ReconProvider = ({ children }) => {
         });
       }
 
-      setEscalations(escRes?.reports || []);
-      setMemoryRules((memRes?.rules && memRes.rules.length > 0) ? memRes.rules : FINANCIAL_MEMORY_RULES);
+      // 4. Fetch escalation investigations
+      const escRes = await api.getEscalationInvestigations(bId);
+      setEscalations(escRes.reports || []);
+
+      // 5. Fetch memory rules
+      const memRes = await api.getMemoryRules();
+      setMemoryRules(memRes.rules || []);
+
       setIsReconciled(true);
     } catch (err) {
       console.error("Error fetching batch data:", err);
@@ -254,59 +258,16 @@ export const ReconProvider = ({ children }) => {
       setIsReconciled(true);
       return bId;
     } catch (err) {
-      console.warn("Backend API unreachable or offline; activating standalone reconciliation engine:", err);
-      
-      // Standalone Fallback Engine (Runs smoothly on Vercel / Cloud without active local Python backend)
-      const now = new Date();
-      const formattedDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-      const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-      
-      setBatchId("demo-batch-74");
-      setTransactions(ALL_74_RECORDS);
-      
-      const appCount = ALL_74_RECORDS.filter(m => m.status === 'APPROVE').length;
-      const holdCount = ALL_74_RECORDS.filter(m => m.status === 'HOLD').length;
-      const escCount = ALL_74_RECORDS.filter(m => m.status === 'ESCALATE').length;
-
-      setKpiData({
-        matchRate: 91.9,
-        matchRateLabel: "Matched transactions",
-        approveCount: appCount,
-        approveLabel: "Auto-cleared",
-        holdCount: holdCount,
-        holdLabel: "Needs glance",
-        escalateCount: escCount,
-        escalateLabel: "Needs human",
-        throughput: `${ALL_74_RECORDS.length} in 0.24s`,
-        throughputLabel: "Records processed",
-        batchDate: formattedDate,
-        batchTime: formattedTime,
-        totalRecords: ALL_74_RECORDS.length,
-        processingTime: "0.24s",
-        healthStatus: "Healthy"
-      });
+      console.warn("Backend API not reachable (running in standalone/Vercel mode). Activating client engine:", err);
+      // Fallback for Vercel deployment without active backend
+      const mapped = MOCK_ORDERS.map(mapBackendRecord);
+      setBatchId('batch-standalone-74');
+      setTransactions(mapped);
+      setKpiData(KPI_DATA);
       setCashData(CASH_POSITION_DATA);
-      setEscalations([
-        {
-          order_id: "ORD1042",
-          category: "UNEXPLAINED",
-          status: "ESCALATE",
-          diagnosis: "Net bank deposit is missing ₹1,299.29 with no corresponding MDR fee, GST, or Section 194-O tax deduction on record.",
-          confidence: 96,
-          action: "Flag for merchant operations review with bank UTR reference."
-        },
-        {
-          order_id: "ORD1055",
-          category: "PARTIAL_PAYMENT",
-          status: "HOLD",
-          diagnosis: "Tranche 1 credited ₹4,500 of ₹7,890. Balance of ₹3,390 is pending next settlement cycle clearance.",
-          confidence: 94,
-          action: "Hold in pending verification queue until T+3 clearance window."
-        }
-      ]);
       setMemoryRules(FINANCIAL_MEMORY_RULES);
       setIsReconciled(true);
-      return "demo-batch-74";
+      return 'batch-standalone-74';
     } finally {
       setIsReconciling(false);
     }
@@ -375,7 +336,7 @@ export const ReconProvider = ({ children }) => {
     const mapped = mapBackendRecord(order);
     setSelectedOrder(mapped);
 
-    if (batchId && mapped?.orderId && batchId !== "demo-batch-74") {
+    if (batchId && mapped?.orderId) {
       try {
         const detail = await api.getTransactionDetail(batchId, mapped.orderId);
         const report = await api.investigateOrder(batchId, mapped.orderId);
@@ -387,19 +348,6 @@ export const ReconProvider = ({ children }) => {
       } catch (e) {
         console.warn("Could not load full drawer details:", e);
       }
-    } else if (mapped) {
-      // Standalone investigation report
-      const mockReport = {
-        diagnosis: mapped.reasoning?.[0] || `Discrepancy detected for order ${mapped.orderId}: Net variance of ₹${Number(mapped.difference || 0).toFixed(2)} between settlement and bank statement.`,
-        root_cause: mapped.category === 'UNEXPLAINED' ? 'Missing UTR reference on bank credit feed' : (mapped.category === 'PARTIAL_PAYMENT' ? 'Tranche payout split across multiple cycles' : 'Settlement fee/tax variance'),
-        recommended_action: mapped.status === 'ESCALATE' ? 'Flag for manual merchant inquiry with bank statement UTR proof.' : 'Auto-clear under institutional memory rule.',
-        confidence: mapped.confidence || 95,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setSelectedOrder(prev => ({
-        ...prev,
-        investigationReport: mockReport
-      }));
     }
   };
 
@@ -408,7 +356,7 @@ export const ReconProvider = ({ children }) => {
   };
 
   const markOrderResolved = async (orderId, note = "Resolved by analyst") => {
-    if (batchId && batchId !== "demo-batch-74") {
+    if (batchId) {
       try {
         await api.resolveOrderApi(batchId, orderId, note);
       } catch (e) {
@@ -424,7 +372,6 @@ export const ReconProvider = ({ children }) => {
       }
     }));
     setTransactions(prev => prev.map(t => t.orderId === orderId ? { ...t, resolved: true, resolvedNote: note } : t));
-    setSelectedOrder(prev => prev && prev.orderId === orderId ? { ...prev, resolved: true, resolvedNote: note } : prev);
   };
 
   const addOrderNote = (orderId, note) => {
@@ -463,25 +410,35 @@ export const ReconProvider = ({ children }) => {
       };
       setChatMessages(prev => [...prev, botMsg]);
     } catch (err) {
-      console.warn("Copilot API offline, using client-side intelligence response:", err);
-      const qLower = query.toLowerCase();
-      let reply = "I've analyzed the active batch: 58 orders auto-approved (91.9% match rate), 9 held for timing clearance, and 7 escalated for human review.";
+      console.warn("Backend copilot API offline, generating client-side answer:", err);
+      const lower = query.toLowerCase();
+      let answerText = "";
+      let matchedOrder = null;
       
-      if (qLower.includes("gross") || qLower.includes("inflow") || qLower.includes("realiz")) {
-        reply = "Across this cycle, total gross transaction volume is ₹3,92,410.00 with ₹3,61,960.00 in verified net bank realization and ₹18,640.00 in pending at-risk variance.";
-      } else if (qLower.includes("1055") || qLower.includes("partial")) {
-        reply = "Order ORD1055 was flagged for partial payment: Tranche 1 credited ₹4,500 of ₹7,890 gross. The remaining ₹3,390 is scheduled for the next T+3 settlement cycle.";
-      } else if (qLower.includes("fee") || qLower.includes("tax") || qLower.includes("mdr") || qLower.includes("tds")) {
-        reply = "Total fee & tax deductions: MDR Gateway fee (2.0%), GST on MDR (18%), and Section 194-O TDS withholding (1.0%) across all active orders.";
-      } else if (qLower.includes("delay") || qLower.includes("timing")) {
-        reply = "8 orders experienced timing delays between 3 to 7 days due to bank clearance latency and weekend cutoffs, but all were matched to bank UTR references.";
+      if (lower.includes("gross") || lower.includes("net") || lower.includes("realization")) {
+        answerText = "Our total gross intake across the 74 transactions is ₹2,42,499.31, resulting in an effective net bank realization of ₹2,32,799.31 after ₹9,700.00 in statutory deductions (MDR 2%, GST 18%, and TDS Section 194-O).";
+      } else if (lower.includes("ord1055") || lower.includes("1055")) {
+        const ord = MOCK_ORDERS.find(o => o.orderId === 'ORD1055') || MOCK_ORDERS[0];
+        matchedOrder = ord;
+        answerText = `Order ORD1055 was escalated due to an unverified fee variance of ₹${ord.difference || '1,144.07'}. The bank deposit did not reflect standard 2% MDR calculations and is queued for merchant investigation.`;
+      } else if (lower.includes("partial") || lower.includes("locked") || lower.includes("dispute")) {
+        answerText = "Currently, ₹18,640.00 is flagged across 11 escalated records (partial tranche payouts and chargeback reversals). 55 transactions (85.1%) have been auto-cleared without human intervention.";
+      } else if (lower.includes("delay") || lower.includes("timing") || lower.includes("5 days")) {
+        answerText = "8 transactions experienced T+2 to T+5 clearance latency within the configured 3-day tolerance window. These are classified as TIMING_DELAY and placed on temporary HOLD until next bank ledger settlement.";
+      } else if (lower.includes("fee") || lower.includes("tax") || lower.includes("breakdown") || lower.includes("mdr")) {
+        answerText = "Fee breakdown: Standard MDR fee is 2.0% (₹4,849.98), GST on MDR is 18.0% (₹873.00), and Section 194-O statutory TDS withholding is 1.0% (₹2,425.00). Total deductions match ₹9,700.00 across the batch.";
+      } else if (lower.includes("lumped") || lower.includes("batch")) {
+        answerText = "15 orders were resolved through Pass 2 (Lumped Batch N:1) by decomposing single aggregate bank deposit UTRs using pro-rata net distribution.";
+      } else {
+        answerText = `Finance Wizard analyzed your query "${query}". All 74 multi-source transactions are processed with an 85.1% match rate. ₹2,32,799.31 settled and ₹18,640.00 in pending review.`;
       }
 
       const botMsg = {
         id: Date.now() + 1,
         sender: "wizard",
-        text: reply,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        text: answerText,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        relatedOrder: matchedOrder
       };
       setChatMessages(prev => [...prev, botMsg]);
     }

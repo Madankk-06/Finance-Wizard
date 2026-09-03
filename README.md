@@ -13,22 +13,24 @@
 
 > **Transform 2–5 days of manual reconciliation into a sub-30 minute automated audit cycle.**
 
-[📽️ Demo Video](#-demo-video) · [📸 Screenshots](#-screenshots) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#-architecture) · [🧩 10-Phase Pipeline](#-10-phase-pipeline)
+[🎬 YouTube Demo](https://youtu.be/XnVxCykOP3M) · [📸 Screenshots](#-screenshots) · [🚀 Quick Start](#-quick-start) · [🏗️ Architecture](#-architecture) · [🧩 10-Phase Pipeline](#-10-phase-pipeline)
 
 </div>
 
 ---
 
-## 📽️ Demo Video
+## 🎬 Demonstration Video
 
 <div align="center">
 
-[![Download & Watch Full Demonstration Video](https://img.shields.io/badge/📥_Download_%26_Watch_Demo_Video-Click_Here-00C853?style=for-the-badge&logo=googleplay&logoColor=white)](https://raw.githubusercontent.com/Madankk-06/Finance-Wizard/main/data/Finance_Wizard_demo.mp4)
+[![Watch Finance Wizard Demo on YouTube](https://img.youtube.com/vi/XnVxCykOP3M/maxresdefault.jpg)](https://youtu.be/XnVxCykOP3M)
 
 <br/>
 
+[![Watch on YouTube](https://img.shields.io/badge/▶️_Watch_Full_Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XnVxCykOP3M)
+
 <p align="center">
-  <sub>👆 Click the button above to download and watch the full high-resolution video walkthrough</sub>
+  <sub>👆 Click the thumbnail above or <a href="https://youtu.be/XnVxCykOP3M">watch the full walkthrough on YouTube (https://youtu.be/XnVxCykOP3M)</a></sub>
 </p>
 
 </div>
@@ -285,9 +287,9 @@ finance-wizard/
 │   └── App.jsx
 │
 ├── docs/
-│   └── screenshots/            # UI Screenshots
+│   ├── screenshots/            # UI Screenshots
+│   └── youtube_thumbnail.jpg   # YouTube Banner
 ├── data/
-│   ├── Finance_Wizard_demo.mp4 # Video Demonstration (Original)
 │   └── samples/                # Demo CSVs (settlement, bank, ledger)
 ├── package.json
 └── vite.config.js
